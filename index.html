@@ -1,1498 +1,309 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Nunito:wght@300;400;600;700&display=swap');
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: #f5eeff;
-    overflow-x: hidden;
-    cursor: default;
-  }
-
-  .page {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  /* ── HERO ── */
-  #hero {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(180deg, #1a0a2e 0%, #2d1060 40%, #6b2fa0 75%, #c97fd4 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-stars {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .hstar {
-    position: absolute;
-    border-radius: 50%;
-    background: #fff;
-    animation: htwink var(--d, 3s) ease-in-out infinite alternate;
-    opacity: 0;
-  }
-
-  @keyframes htwink {
-    0% {
-      opacity: 0;
-      transform: scale(.5)
-    }
-
-    100% {
-      opacity: var(--o, .8);
-      transform: scale(1)
-    }
-  }
-
-  .moon {
-    position: absolute;
-    top: 60px;
-    right: 80px;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: #fff9e0;
-    box-shadow: 0 0 30px #fff8c0, 0 0 60px #ffe88060;
-  }
-
-  .envelope-wrap {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-    cursor: pointer;
-  }
-
-  .envelope-wrap:hover .env-body {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
-  }
-
-  .hero-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem;
-    font-style: italic;
-    color: #e8d0ff;
-    letter-spacing: 2px;
-    text-align: center;
-    animation: pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-
-    0%,
-    100% {
-      opacity: .7
-    }
-
-    50% {
-      opacity: 1
-    }
-  }
-
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.2rem;
-    font-weight: 300;
-    color: #fff;
-    text-align: center;
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-
-  .hero-sub {
-    font-size: .85rem;
-    color: #d0b0f0;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-align: center;
-  }
-
-  .env-wrap {
-    position: relative;
-    width: 240px;
-    height: 170px;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .5));
-  }
-
-  .env-body {
-    width: 240px;
-    height: 170px;
-    background: linear-gradient(145deg, #fffaf0, #fef0ff);
-    border-radius: 8px;
-    position: relative;
-    transition: transform .3s;
-  }
-
-  .env-flap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 240px;
-    height: 85px;
-    background: linear-gradient(160deg, #f5e0ff, #e8d0f8);
-    clip-path: polygon(0 0, 50% 55%, 100% 0);
-    border-radius: 8px 8px 0 0;
-    transform-origin: top center;
-    transition: transform .6s cubic-bezier(.4, 0, .2, 1);
-  }
-
-  .env-flap.open {
-    transform: rotateX(180deg);
-  }
-
-  .env-heart {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 28px;
-    pointer-events: none;
-  }
-
-  .env-lines {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .env-line {
-    width: 80px;
-    height: 3px;
-    border-radius: 2px;
-    background: rgba(160, 100, 200, .2);
-  }
-
-  .env-line:nth-child(2) {
-    width: 60px;
-  }
-
-  .open-hint {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #c090e0;
-    font-size: .8rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    animation: bounce 2s ease-in-out infinite;
-  }
-
-  @keyframes bounce {
-
-    0%,
-    100% {
-      transform: translateY(0)
-    }
-
-    50% {
-      transform: translateY(-5px)
-    }
-  }
-
-  /* ── FLOATING CLOUDS ── */
-  .cloud {
-    position: absolute;
-    opacity: .15;
-    pointer-events: none;
-  }
-
-  .cloud svg {
-    width: 100%;
-    height: auto;
-  }
-
-  /* ── INVITATION PAGES ── */
-  #invitation {
-    display: none;
-    width: 100%;
-    background: linear-gradient(180deg, #f9f0ff 0%, #fff8f0 30%, #f0f8ff 60%, #f9f0ff 100%);
-  }
-
-  /* ── SECTION COMMON ── */
-  .section {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 60px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-
-  /* ── REVEAL ITEMS ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(50px) scale(.95);
-    transition: opacity .8s ease, transform .8s cubic-bezier(.34, 1.56, .64, 1);
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  .reveal-left {
-    opacity: 0;
-    transform: translateX(-60px);
-    transition: opacity .7s ease, transform .7s ease;
-  }
-
-  .reveal-left.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .reveal-right {
-    opacity: 0;
-    transform: translateX(60px);
-    transition: opacity .7s ease, transform .7s ease;
-  }
-
-  .reveal-right.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* ── SCENE 1: SKY BANNER ── */
-  #s1 {
-    min-height: 60vh;
-    background: linear-gradient(180deg, #b8d9f8 0%, #dceeff 50%, #fff8f0 100%);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .balloon {
-    position: absolute;
-    animation: balFloat var(--d, 6s) ease-in-out infinite alternate;
-  }
-
-  @keyframes balFloat {
-    0% {
-      transform: translateY(0) rotate(-3deg)
-    }
-
-    100% {
-      transform: translateY(-20px) rotate(3deg)
-    }
-  }
-
-  .balloon svg {
-    width: var(--sz, 60px);
-    height: auto;
-  }
-
-  .big-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.5rem;
-    font-weight: 600;
-    color: #5a2080;
-    text-align: center;
-    line-height: 1;
-    text-shadow: 0 2px 20px rgba(160, 80, 220, .15);
-  }
-
-  .big-title-sub {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-style: italic;
-    color: #9060c0;
-    text-align: center;
-    margin-top: 8px;
-  }
-
-  /* ── TEDDY ── */
-  #s2 {
-    background: linear-gradient(180deg, #fff8e8 0%, #ffeef8 100%);
-    padding: 80px 24px;
-  }
-
-  .teddy-wrap {
-    margin: 32px 0;
-  }
-
-  .speech-bubble {
-    background: #fff;
-    border: 2px solid #f0d0ff;
-    border-radius: 20px;
-    padding: 14px 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: #8040c0;
-    position: relative;
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  .speech-bubble::before {
-    content: '';
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 7px solid transparent;
-    border-bottom-color: #f0d0ff;
-  }
-
-  .speech-bubble::after {
-    content: '';
-    position: absolute;
-    top: -11px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-bottom-color: #fff;
-  }
-
-  /* ── EVENT DETAILS ── */
-  #s3 {
-    background: linear-gradient(180deg, #ffeef8 0%, #f0eaff 100%);
-  }
-
-  .detail-card {
-    background: rgba(255, 255, 255, .8);
-    border: 1.5px solid rgba(200, 150, 240, .25);
-    border-radius: 24px;
-    padding: 28px 32px;
-    width: 100%;
-    backdrop-filter: blur(10px);
-  }
-
-  .detail-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px dashed rgba(200, 150, 240, .3);
-  }
-
-  .detail-row:last-child {
-    border-bottom: none;
-  }
-
-  .detail-icon-box {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #e8d0ff, #d0e8ff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 20px;
-  }
-
-  .detail-label {
-    font-size: 10px;
-    color: #b090d0;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-
-  .detail-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    color: #5a2080;
-    font-weight: 600;
-  }
-
-  .detail-note {
-    font-size: 11px;
-    color: #9070b0;
-    margin-top: 1px;
-  }
-
-  /* ── CHARACTERS PARADE ── */
-  #s4 {
-    background: linear-gradient(180deg, #f0eaff 0%, #e8f8f0 100%);
-    overflow: hidden;
-  }
-
-  .char-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    width: 100%;
-    padding: 20px 0;
-    gap: 8px;
-  }
-
-  .char-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .char-label {
-    font-size: 11px;
-    color: #9070b0;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* ── VERSE ── */
-  #s5 {
-    background: linear-gradient(180deg, #e8f8f0 0%, #f9f0ff 100%);
-    text-align: center;
-  }
-
-  .verse-card {
-    background: linear-gradient(145deg, rgba(255, 255, 255, .9), rgba(240, 230, 255, .6));
-    border: 1px solid rgba(200, 160, 240, .3);
-    border-radius: 28px;
-    padding: 36px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .verse-deco {
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 8rem;
-    color: rgba(180, 140, 240, .08);
-    top: -20px;
-    left: 10px;
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .verse-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1.3rem;
-    color: #6030a0;
-    line-height: 1.8;
-    position: relative;
-  }
-
-  .verse-ref {
-    font-size: .8rem;
-    color: #b090d0;
-    letter-spacing: 2px;
-    margin-top: 12px;
-    display: block;
-  }
-
-  /* ── RSVP ── */
-  #s6 {
-    background: linear-gradient(180deg, #f9f0ff 0%, #fff5f8 100%);
-    padding-bottom: 100px;
-  }
-
-  .rsvp-card {
-    background: rgba(255, 255, 255, .9);
-    border: 1.5px solid rgba(200, 150, 240, .3);
-    border-radius: 28px;
-    padding: 36px 28px;
-    width: 100%;
-  }
-
-  .rsvp-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: #5a2080;
-    text-align: center;
-    margin-bottom: 6px;
-  }
-
-  .rsvp-sub {
-    font-size: .8rem;
-    color: #b090d0;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 28px;
-  }
-
-  .form-grp {
-    margin-bottom: 18px;
-  }
-
-  .form-lbl {
-    font-size: 11px;
-    color: #9070b0;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    display: block;
-  }
-
-  .form-inp {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1.5px solid rgba(200, 150, 240, .35);
-    border-radius: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    color: #4a2070;
-    background: rgba(255, 255, 255, .8);
-    outline: none;
-    transition: border-color .2s, box-shadow .2s;
-  }
-
-  .form-inp:focus {
-    border-color: rgba(160, 100, 220, .6);
-    box-shadow: 0 0 0 4px rgba(160, 100, 220, .08);
-  }
-
-  .form-inp::placeholder {
-    color: #c0a0d8;
-  }
-
-  .attend-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .att-btn {
-    padding: 12px 8px;
-    border-radius: 14px;
-    border: 1.5px solid rgba(200, 150, 240, .35);
-    background: rgba(255, 255, 255, .7);
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #9070b0;
-    cursor: pointer;
-    transition: all .25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .att-btn:hover {
-    background: rgba(200, 150, 240, .1);
-  }
-
-  .att-btn.yes.active {
-    background: linear-gradient(135deg, #e8d0ff, #d0e8ff);
-    border-color: #b080e0;
-    color: #5a2080;
-  }
-
-  .att-btn.no.active {
-    background: linear-gradient(135deg, #ffe0f0, #f8e8ff);
-    border-color: #d090b0;
-    color: #803050;
-  }
-
-  .count-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .cnt-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(200, 150, 240, .35);
-    background: rgba(255, 255, 255, .8);
-    color: #9070b0;
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .2s;
-    flex-shrink: 0;
-  }
-
-  .cnt-btn:hover {
-    background: rgba(200, 150, 240, .15);
-  }
-
-  .cnt-disp {
-    flex: 1;
-    text-align: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    color: #5a2080;
-    font-weight: 600;
-  }
-
-  .sub-btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 18px;
-    border: none;
-    background: linear-gradient(135deg, #b870e8, #8ab0f0);
-    color: #fff;
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: 14px;
-    transition: all .3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .sub-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(160, 100, 220, .4);
-  }
-
-  .sub-btn:active {
-    transform: translateY(0);
-  }
-
-  .success-wrap {
-    display: none;
-    text-align: center;
-    padding: 32px 0;
-    animation: fadeUp .6s ease-out both;
-  }
-
-  .success-wrap.show {
-    display: block;
-  }
-
-  @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px)
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0)
-    }
-  }
-
-  .success-ico {
-    font-size: 56px;
-    margin-bottom: 16px;
-    animation: floatBob 3s ease-in-out infinite;
-  }
-
-  @keyframes floatBob {
-
-    0%,
-    100% {
-      transform: translateY(0)
-    }
-
-    50% {
-      transform: translateY(-10px)
-    }
-  }
-
-  .success-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    font-style: italic;
-    color: #5a2080;
-    margin-bottom: 10px;
-  }
-
-  .success-msg {
-    font-size: 14px;
-    color: #9070b0;
-    line-height: 1.8;
-  }
-
-  .confetti-p {
-    position: fixed;
-    border-radius: 3px;
-    pointer-events: none;
-    z-index: 9999;
-    animation: cfall linear forwards;
-  }
-
-  @keyframes cfall {
-    0% {
-      transform: translateY(-30px) rotate(0);
-      opacity: 1
-    }
-
-    100% {
-      transform: translateY(100vh) rotate(720deg);
-      opacity: 0
-    }
-  }
-
-  /* ── SECTION TITLES ── */
-  .sec-eyebrow {
-    font-size: 10px;
-    color: #b090d0;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 8px;
-  }
-
-  .sec-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem;
-    font-weight: 300;
-    font-style: italic;
-    color: #5a2080;
-    text-align: center;
-    line-height: 1.2;
-    margin-bottom: 24px;
-  }
-
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    margin: 24px 0;
-  }
-
-  .div-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(200, 150, 240, .5), transparent);
-  }
-
-  .div-dot {
-    color: rgba(200, 150, 240, .8);
-    font-size: 16px;
-  }
-
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    padding: 40px 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: .95rem;
-    color: #b090d0;
-  }
-
-  /* ── PREMIUM AESTHETIC OVERHAUL ── */
-  body {
-    background: #fdfaf5;
-    /* Pearl white base */
-    position: relative;
-  }
-
-  /* Subtle Parchment Texture Layer */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
-    opacity: 0.3;
-    pointer-events: none;
-    z-index: 1000;
-  }
-
-  /* ── GOLDEN ELEMENTS ── */
-  :root {
-    --gold-grad: linear-gradient(135deg, #d4af37 0%, #f9f295 50%, #d4af37 100%);
-    --gold-border: 1px solid rgba(212, 175, 55, 0.3);
-  }
-
-  .sec-title {
-    background: var(--gold-grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 600;
-    letter-spacing: 1px;
-  }
-
-  /* ── GLASSMORPHISM 2.0 ── */
-  .detail-card,
-  .rsvp-card,
-  .verse-card {
-    background: rgba(255, 255, 255, 0.6) !important;
-    border: var(--gold-border) !important;
-    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5) !important;
-    backdrop-filter: blur(20px) !important;
-  }
-
-  /* ── PARALLAX BACKGROUND OBJECTS ── */
-  .bg-deco {
-    position: fixed;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.4;
-    transition: transform 0.1s linear;
-  }
-
-  /* ── REFINED DIVIDERS ── */
-  .div-line {
-    background: var(--gold-grad) !important;
-    height: 1px;
-    opacity: 0.6;
-  }
-
-  .div-dot {
-    color: #d4af37 !important;
-    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-  }
-
-  /* ── CUSTOM CURSOR GLOW ── */
-  .cursor-glow {
-    position: fixed;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: -2;
-    transform: translate(-50%, -50%);
-  }
-
-  /* ── DYNAMIC BALLOONS ── */
-  .scroll-balloon {
-    position: fixed;
-    z-index: 100;
-    pointer-events: auto;
-    cursor: pointer;
-    transition: transform 0.3s ease-out;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
-    animation: floatUp var(--duration, 8s) linear forwards;
-  }
-
-  .scroll-balloon:hover {
-    transform: scale(1.1) rotate(5deg);
-  }
-
-  @keyframes floatUp {
-    0% {
-      transform: translateY(110vh) rotate(0deg);
-      opacity: 0;
-    }
-
-    10% {
-      opacity: 1;
-    }
-
-    90% {
-      opacity: 1;
-    }
-
-    100% {
-      transform: translateY(-20vh) rotate(var(--rot, 20deg));
-      opacity: 0;
-    }
-  }
-
-  .pop-effect {
-    position: absolute;
-    pointer-events: none;
-    animation: explode 0.4s ease-out forwards;
-  }
-
-  @keyframes explode {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    100% {
-      transform: scale(2.5);
-      opacity: 0;
-    }
-  }
-
-  /* ── INTERACTIVITY ENHANCEMENTS ── */
-  .detail-card {
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .detail-card:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 30px 60px rgba(212, 175, 55, 0.2);
-    border-color: rgba(212, 175, 55, 0.6) !important;
-  }
-
-  .detail-row {
-    transition: all 0.3s ease;
-  }
-
-  .detail-row:hover {
-    padding-left: 10px;
-    background: rgba(212, 175, 55, 0.05);
-    border-radius: 8px;
-  }
-
-  .char-item {
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .char-item:hover {
-    transform: scale(1.2) rotate(8deg);
-    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
-  }
-
-  .verse-card {
-    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .verse-card:hover {
-    transform: perspective(1000px) rotateX(8deg) rotateY(-8deg);
-  }
-</style>
-
-<div id="hero">
-  <div class="cursor-glow" id="cursorGlow"></div>
-  <!-- Deco Elements -->
-  <div class="bg-deco" style="top:10%; left:5%; width:150px;" data-speed="0.2"><svg viewBox="0 0 200 200">
-      <path d="M40,100 Q40,40 100,40 Q160,40 160,100 Q160,160 100,160 Q40,160 40,100" fill="rgba(212,175,55,0.05)" />
-    </svg></div>
-  <div class="bg-deco" style="top:40%; right:2%; width:200px;" data-speed="-0.1"><svg viewBox="0 0 200 200">
-      <path d="M40,100 Q40,40 100,40 Q160,40 160,100 Q160,160 100,160 Q40,160 40,100" fill="rgba(160,100,220,0.05)" />
-    </svg></div>
-
-  <div class="hero-stars" id="hstars"></div>
-  <div class="moon"></div>
-
-  <div class="envelope-wrap" id="envWrap" onclick="openInvitation()">
-    <div style="text-align:center;">
-      <div class="hero-tagline">A Little Angel Has Arrived</div>
-      <div class="hero-title">Baby Lorenzo<br><span style="font-size:1.6rem;color:#d0a0ff;">is being christened</span>
-      </div>
-      <div class="hero-sub" style="margin-top:8px;">Tap to open your invitation</div>
-    </div>
-
-    <div class="env-wrap">
-      <div class="env-body" id="envBody">
-        <div class="env-flap" id="envFlap"></div>
-        <div class="env-heart">🕊️</div>
-        <div class="env-lines">
-          <div class="env-line"></div>
-          <div class="env-line"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Lorenzo | A Heavenly 3D Celebration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Nunito:wght@200;300;400;600;700&display=swap');
+
+        :root {
+            --gold: #c5a059;
+            --gold-light: #e6d2a5;
+            --sky-blue: #e3f2fd;
+            --soft-white: #fdfaf5;
+            --accent: #b08d57;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--soft-white);
+            color: #4a3d2e;
+            overflow-x: hidden;
+            cursor: none;
+            line-height: 1.6;
+        }
+
+        /* ── CURSOR ── */
+        .cursor-sphere {
+            position: fixed; width:24px; height:24px;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--gold-light) 60%, var(--gold));
+            border-radius: 50%; pointer-events:none; z-index:10000;
+            box-shadow: 0 10px 20px rgba(184, 150, 80, 0.4);
+            transition: transform 0.1s;
+        }
+
+        /* ── ENVIRONMENT ── */
+        .sky-env { position:fixed; inset:0; background:linear-gradient(to bottom, #fff, #e3f2fd); z-index:-2; }
+        .cloud { position:absolute; pointer-events:none; background:#fff; filter:blur(25px); border-radius:50%; opacity:0.5; }
+
+        /* ── HERO ── */
+        #hero {
+            height: 100vh; width: 100%; display:flex; align-items:center; justify-content:center;
+            perspective:2000px; overflow:hidden;
+        }
+        .hero-world { transform-style:preserve-3d; text-align:center; display:flex; flex-direction:column; align-items:center; }
+        .hero-title { font-family:'Playfair Display',serif; font-size:clamp(3rem, 10vw, 7rem); color:var(--accent); transform:translateZ(100px); }
+        .hero-sub { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-style:italic; letter-spacing:6px; color:var(--gold); transform:translateZ(50px); }
+
+        /* ── 3D ENVELOPE ── */
+        .envelope-3d {
+            width: 280px; height: 180px; background: #fff; border-radius: 10px;
+            position: relative; transform-style: preserve-3d; cursor: pointer;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1); transform: rotateX(10deg);
+            margin-top:40px; transition: transform 0.5s;
+        }
+        .flap { position:absolute; top:0; left:0; width:100%; height:100%; background:#fcfaf7; clip-path:polygon(0 0, 50% 60%, 100% 0); z-index:3; transform-origin: top; transition: transform 0.8s; }
+        .envelope-3d.open .flap { transform: rotateX(180deg); }
+        .envelope-3d.open .paper { transform: translateY(-75%) translateZ(20px); }
+        .paper { position:absolute; inset:10px; background:#fff; z-index:2; border:1px solid #f9f2e8; display:flex; align-items:center; justify-content:center; transition: transform 0.8s; }
+        .seal { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4; font-size:40px; transition:opacity 0.3s; }
+        .envelope-3d.open .seal { opacity:0; }
+
+        /* ── MAIN CONTENT ── */
+        #main-content { display:none; opacity:0; }
+        .section-3d { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:100px 20px; transform-style:preserve-3d; position:relative; }
+        .card-3d { background:rgba(255,255,255,0.7); backdrop-filter:blur(20px); border:1px solid #fff; border-radius:40px; padding:60px; width:100%; max-width:900px; box-shadow:0 40px 100px rgba(0,0,0,0.05); transform-style:preserve-3d; }
+        .float-z { transform: translateZ(60px); }
+
+        /* ── SCROLLING OBJECTS ── */
+        .floating-obj { position:fixed; pointer-events:none; z-index:5; font-size:3rem; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.1)); }
+        
+        /* ── GALLERY ── */
+        .gallery-3d { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:30px; margin-top:40px; }
+        .photo-frame { padding:15px; background:#fff; box-shadow:0 20px 40px rgba(0,0,0,0.08); transform-style:preserve-3d; transition:transform 0.4s; cursor:pointer; }
+        .photo-frame:hover { transform: translateZ(40px) rotateY(15deg) rotateX(5deg); }
+        .photo-frame img { width:100%; border-radius:5px; transform:translateZ(10px); }
+
+        /* ── RSVP ── */
+        .btn-luxe { width:100%; padding:20px; border:none; border-radius:15px; background:linear-gradient(135deg, var(--gold), var(--accent)); color:#fff; font-weight:700; letter-spacing:4px; text-transform:uppercase; cursor:pointer; }
+        .input-luxe { width:100%; padding:15px; border:1px solid #eee; border-radius:12px; margin-bottom:15px; font-family:inherit; }
+
+        @media (max-width: 600px) { .card-3d { padding:40px 20px; } }
+    </style>
+</head>
+<body>
+    <div class="cursor-sphere" id="cursor"></div>
+    <div class="sky-env" id="sky"></div>
+
+    <!-- Hero World -->
+    <section id="hero">
+        <div class="hero-world">
+            <h1 class="hero-title" id="hTitle">Baby Lorenzo</h1>
+            <p class="hero-sub" id="hSub">A HEAVENLY CHRISTENING</p>
+            <div class="envelope-3d" id="env" onclick="openInvitation()">
+                <div class="flap"></div>
+                <div class="paper">
+                    <span style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.4rem; color:var(--accent);">You're Invited</span>
+                </div>
+                <div class="seal">🕊️</div>
+            </div>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <div class="open-hint" id="openHint">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M8 3v10M3 8l5 5 5-5" stroke="#c090e0" stroke-width="1.5" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-      <span>Tap to open</span>
-    </div>
-  </div>
-</div>
+    <!-- Main Invitation -->
+    <main id="main-content">
+        <!-- Intro & Photo -->
+        <section class="section-3d">
+            <div class="card-3d">
+                <div class="float-z">
+                    <div style="text-align:center; font-family:'Playfair Display',serif; font-size:3.5rem; color:var(--accent); margin-bottom:30px;">A Little <span>Angel</span></div>
+                    
+                    <div class="photo-frame" style="max-width: 400px; margin: 0 auto 40px;">
+                        <img src="C:\Users\Keanu\.gemini\antigravity\brain\52c4ea61-2d1c-4a8c-ac4c-74e0370d4598\baby_lorenzo_christening_photo_1776525324716.png" alt="Baby Lorenzo">
+                        <p style="text-align:center; margin-top:15px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem;">Our Beloved Lorenzo</p>
+                    </div>
 
-<div id="invitation">
+                    <p style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.8rem;">
+                        "Blessed are the pure in heart, for they shall see God."
+                    </p>
+                </div>
+            </div>
+        </section>
 
-  <!-- SECTION 1: Sky with balloons -->
-  <div id="s1" class="section" style="max-width:100%;padding:80px 24px 60px;">
-    <div class="balloon" style="--d:5s;--sz:55px;left:8%;top:20%;"><svg viewBox="0 0 60 90"
-        xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="32" rx="22" ry="28" fill="#f0a0c0" />
-        <line x1="30" y1="60" x2="30" y2="88" stroke="#d080a0" stroke-width="1.5" />
-        <path d="M24 60 Q30 68 36 60" fill="none" stroke="#d080a0" stroke-width="1.5" />
-      </svg></div>
-    <div class="balloon" style="--d:7s;--sz:45px;left:18%;top:15%;animation-delay:1s;"><svg viewBox="0 0 60 90"
-        xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="32" rx="22" ry="28" fill="#a0c0f8" />
-        <line x1="30" y1="60" x2="30" y2="88" stroke="#80a0d8" stroke-width="1.5" />
-        <path d="M24 60 Q30 68 36 60" fill="none" stroke="#80a0d8" stroke-width="1.5" />
-      </svg></div>
-    <div class="balloon" style="--d:6s;--sz:65px;right:10%;top:18%;animation-delay:.5s;"><svg viewBox="0 0 60 90"
-        xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="32" rx="22" ry="28" fill="#c0e8a0" />
-        <line x1="30" y1="60" x2="30" y2="88" stroke="#90c870" stroke-width="1.5" />
-        <path d="M24 60 Q30 68 36 60" fill="none" stroke="#90c870" stroke-width="1.5" />
-      </svg></div>
-    <div class="balloon" style="--d:8s;--sz:50px;right:22%;top:25%;animation-delay:2s;"><svg viewBox="0 0 60 90"
-        xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="32" rx="22" ry="28" fill="#f8d880" />
-        <line x1="30" y1="60" x2="30" y2="88" stroke="#d8a840" stroke-width="1.5" />
-        <path d="M24 60 Q30 68 36 60" fill="none" stroke="#d8a840" stroke-width="1.5" />
-      </svg></div>
-    <div class="balloon" style="--d:5.5s;--sz:40px;left:50%;top:10%;animation-delay:1.5s;"><svg viewBox="0 0 60 90"
-        xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="32" rx="22" ry="28" fill="#e0a8f8" />
-        <line x1="30" y1="60" x2="30" y2="88" stroke="#c080d8" stroke-width="1.5" />
-        <path d="M24 60 Q30 68 36 60" fill="none" stroke="#c080d8" stroke-width="1.5" />
-      </svg></div>
+        <!-- Details -->
+        <section class="section-3d" id="details">
+            <div class="card-3d">
+                <div class="float-z">
+                    <div style="text-align:center; font-family:'Playfair Display',serif; font-size:3rem; color:var(--accent); margin-bottom:40px;">Sacred <span>Details</span></div>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:40px; text-align:center;">
+                        <div>
+                            <div style="font-size:3rem; margin-bottom:10px;">📅</div>
+                            <h4 style="color:var(--gold); letter-spacing:2px;">WHEN</h4>
+                            <p style="font-size:1.5rem; font-family:'Playfair Display',serif;">June 14, 2025</p>
+                            <p>10:00 AM</p>
+                        </div>
+                        <div>
+                            <div style="font-size:3rem; margin-bottom:10px;">⛪</div>
+                            <h4 style="color:var(--gold); letter-spacing:2px;">WHERE</h4>
+                            <p style="font-size:1.5rem; font-family:'Playfair Display',serif;">San Jose Parish</p>
+                            <p>Laoag City</p>
+                        </div>
+                        <div>
+                            <div style="font-size:3rem; margin-bottom:10px;">👗</div>
+                            <h4 style="color:var(--gold); letter-spacing:2px;">DRESS CODE</h4>
+                            <p style="font-size:1.5rem; font-family:'Playfair Display',serif;">Elegant Pastels</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="reveal" style="text-align:center;position:relative;z-index:2;">
-      <div class="sec-eyebrow">We joyfully announce</div>
-      <div class="big-title">Baby Lorenzo</div>
-      <div class="big-title-sub">is receiving the Holy Sacrament of Baptism</div>
-      <div
-        style="margin-top:20px;font-size:1rem;color:#7050a0;font-family:'Cormorant Garamond',serif;font-style:italic;">
-        Son of Miguel & Sofia dela Cruz</div>
-    </div>
-  </div>
+        <!-- Gallery Section -->
+        <section class="section-3d">
+            <div class="card-3d">
+                <div class="float-z">
+                    <div style="text-align:center; font-family:'Playfair Display',serif; font-size:3rem; color:var(--accent); margin-bottom:40px;">Sweet <span>Moments</span></div>
+                    <div class="gallery-3d">
+                        <div class="photo-frame"><img src="https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&w=600" alt="Baby 1"></div>
+                        <div class="photo-frame" style="transform: rotate(5deg);"><img src="https://images.unsplash.com/photo-1544126592-807daa2b567b?auto=format&fit=crop&w=600" alt="Baby 2"></div>
+                        <div class="photo-frame" style="transform: rotate(-5deg);"><img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600" alt="Baby 3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!-- SECTION 2: Teddy Bear -->
-  <div id="s2" class="section">
-    <div class="sec-eyebrow reveal">meet the little one's guardian</div>
-    <div class="sec-title reveal">a blessing wrapped in love</div>
+        <!-- RSVP -->
+        <section class="section-3d">
+            <div class="card-3d" style="max-width:600px;">
+                <div class="float-z">
+                    <div style="text-align:center; font-family:'Playfair Display',serif; font-size:3rem; color:var(--accent); margin-bottom:30px;">RSVP <span>Online</span></div>
+                    <div id="rsvpForm">
+                        <input type="text" id="gName" class="input-luxe" placeholder="GUEST NAME">
+                        <select id="gCount" class="input-luxe">
+                            <option value="1">1 GUEST</option>
+                            <option value="2">2 GUESTS</option>
+                            <option value="3">3+ GUESTS</option>
+                        </select>
+                        <button class="btn-luxe" onclick="submitRSVP()">✦ JOYFULLY CONFIRM ✦</button>
+                    </div>
+                    <div id="success" style="display:none; text-align:center;">
+                        <div style="font-size:3rem;">🕊️</div>
+                        <h2 style="font-family:'Playfair Display',serif;">See you there!</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="teddy-wrap reveal" style="transition-delay:.1s;">
-      <svg width="180" height="200" viewBox="0 0 180 200" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="90" cy="180" rx="55" ry="12" fill="rgba(200,150,100,.15)" />
-        <ellipse cx="90" cy="125" rx="50" ry="55" fill="#e8b870" />
-        <ellipse cx="90" cy="125" rx="36" ry="40" fill="#f5d090" />
-        <circle cx="90" cy="68" r="38" fill="#e8b870" />
-        <circle cx="90" cy="68" r="26" fill="#f5d090" />
-        <circle cx="30" cy="52" r="18" fill="#e8b870" />
-        <circle cx="30" cy="52" r="12" fill="#f5d090" />
-        <circle cx="150" cy="52" r="18" fill="#e8b870" />
-        <circle cx="150" cy="52" r="12" fill="#f5d090" />
-        <circle cx="40" cy="145" r="16" fill="#e8b870" />
-        <circle cx="140" cy="145" r="16" fill="#e8b870" />
-        <ellipse cx="78" cy="66" rx="6" ry="7" fill="#3a2010" />
-        <ellipse cx="102" cy="66" rx="6" ry="7" fill="#3a2010" />
-        <circle cx="80" cy="64" r="2" fill="#fff" />
-        <circle cx="104" cy="64" r="2" fill="#fff" />
-        <ellipse cx="90" cy="78" rx="10" ry="7" fill="#d09060" />
-        <ellipse cx="90" cy="78" rx="6" ry="4" fill="#c07850" />
-        <path d="M82 83 Q90 90 98 83" stroke="#8a4820" stroke-width="2" fill="none" stroke-linecap="round" />
-        <rect x="72" y="105" width="36" height="28" rx="8" fill="#f8c8e8" />
-        <path d="M76 113 L86 119 L76 125" fill="#f090c8" opacity=".6" />
-        <path d="M104 113 L94 119 L104 125" fill="#f090c8" opacity=".6" />
-        <rect x="82" y="103" width="16" height="6" rx="3" fill="#d8a8d8" />
-        <circle cx="90" cy="106" r="4" fill="#e0c0e0" />
-        <path d="M50 145 Q55 168 70 178" stroke="#e8b870" stroke-width="14" stroke-linecap="round" fill="none" />
-        <path d="M130 145 Q125 168 110 178" stroke="#e8b870" stroke-width="14" stroke-linecap="round" fill="none" />
-        <ellipse cx="70" cy="57" rx="4" ry="3" fill="#e09060" opacity=".6" />
-        <ellipse cx="110" cy="57" rx="4" ry="3" fill="#e09060" opacity=".6" />
-      </svg>
-    </div>
+        <footer style="padding:100px 20px; text-align:center; color:var(--accent);">
+            <p style="font-family:'Playfair Display',serif; font-size:1.8rem;">With Endless Love, Miguel & Sofia</p>
+            <p style="font-size:0.8rem; letter-spacing:4px; margin-top:10px;">SAN JOSE PARISH church • LAOAG • JUNE 2025</p>
+        </footer>
+    </main>
 
-    <div class="speech-bubble reveal" style="transition-delay:.2s;max-width:340px;">
-      Come celebrate with us — every cuddle counts! 🌟
-    </div>
-  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
 
-  <!-- SECTION 3: Event Details -->
-  <div id="s3" class="section">
-    <div class="sec-eyebrow reveal">mark your calendar</div>
-    <div class="sec-title reveal">the details</div>
-    <div class="detail-card reveal" style="transition-delay:.1s;">
-      <div class="detail-row">
-        <div class="detail-icon-box">📅</div>
-        <div>
-          <div class="detail-label">Date</div>
-          <div class="detail-val">June 14, 2025 — Saturday</div>
-        </div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-icon-box">🕙</div>
-        <div>
-          <div class="detail-label">Time</div>
-          <div class="detail-val">10:00 AM</div>
-          <div class="detail-note">Holy Mass followed by Reception</div>
-        </div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-icon-box">🕊️</div>
-        <div>
-          <div class="detail-label">Ceremony</div>
-          <div class="detail-val">San Jose Parish Church</div>
-          <div class="detail-note">Ilocos Norte</div>
-        </div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-icon-box">🌸</div>
-        <div>
-          <div class="detail-label">Reception</div>
-          <div class="detail-val">The Garden Pavilion</div>
-          <div class="detail-note">Laoag City, Ilocos Norte</div>
-        </div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-icon-box">🎀</div>
-        <div>
-          <div class="detail-label">Dress Code</div>
-          <div class="detail-val">Pastels & Whites</div>
-          <div class="detail-note">Soft tones to match the celebration</div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
 
-  <!-- SECTION 4: Character Parade -->
-  <div id="s4" class="section" style="max-width:100%;padding:60px 24px;">
-    <div class="sec-eyebrow reveal">come join the fun</div>
-    <div class="sec-title reveal">a magical celebration awaits</div>
+        // ── SMOOTH SCROLL ──
+        const lenis = new Lenis();
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
 
-    <div class="char-row" style="max-width:600px;margin:0 auto;">
-      <!-- Bunny -->
-      <div class="char-item reveal reveal-left" style="transition-delay:.0s;">
-        <svg width="70" height="90" viewBox="0 0 70 90" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="35" cy="85" rx="20" ry="5" fill="rgba(200,180,220,.2)" />
-          <ellipse cx="20" cy="22" rx="8" ry="22" fill="#f0e0f8" transform="rotate(-10,20,22)" />
-          <ellipse cx="50" cy="22" rx="8" ry="22" fill="#f0e0f8" transform="rotate(10,50,22)" />
-          <ellipse cx="20" cy="22" rx="4" ry="16" fill="#f8c0d8" transform="rotate(-10,20,22)" />
-          <ellipse cx="50" cy="22" rx="4" ry="16" fill="#f8c0d8" transform="rotate(10,50,22)" />
-          <ellipse cx="35" cy="62" rx="22" ry="25" fill="#f0e0f8" />
-          <circle cx="35" cy="44" r="20" fill="#f0e0f8" />
-          <ellipse cx="35" cy="44" r="14" rx="14" ry="12" fill="#faeaf8" />
-          <ellipse cx="27" cy="42" rx="4" ry="4.5" fill="#3a2860" />
-          <ellipse cx="43" cy="42" rx="4" ry="4.5" fill="#3a2860" />
-          <circle cx="28.5" cy="40.5" r="1.5" fill="#fff" />
-          <circle cx="44.5" cy="40.5" r="1.5" fill="#fff" />
-          <ellipse cx="35" cy="50" rx="5" ry="3.5" fill="#f8a0c0" />
-          <path d="M30 53 Q35 57 40 53" stroke="#d070a0" stroke-width="1.5" fill="none" stroke-linecap="round" />
-          <ellipse cx="26" cy="46" rx="3" ry="1.5" fill="#f4b0c0" opacity=".6" />
-          <ellipse cx="44" cy="46" rx="3" ry="1.5" fill="#f4b0c0" opacity=".6" />
-        </svg>
-        <div class="char-label">Bunny</div>
-      </div>
+        // ── CURSOR ──
+        const cursor = document.getElementById('cursor');
+        window.addEventListener('mousemove', e => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        });
 
-      <!-- Star wand -->
-      <div class="char-item reveal" style="transition-delay:.15s;">
-        <svg width="60" height="90" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-          <line x1="30" y1="30" x2="30" y2="85" stroke="#c8a040" stroke-width="4" stroke-linecap="round" />
-          <polygon points="30,5 35,20 50,20 38,29 43,44 30,35 17,44 22,29 10,20 25,20" fill="#f8d840" />
-          <polygon points="30,8 34,19 46,19 37,26 41,38 30,31 19,38 23,26 14,19 26,19" fill="#ffe060" />
-          <circle cx="30" cy="22" r="5" fill="#fff8c0" opacity=".8" />
-          <circle cx="10" cy="15" r="2.5" fill="#f8d840" opacity=".6" />
-          <circle cx="52" cy="10" r="2" fill="#f8d840" opacity=".5" />
-          <circle cx="5" cy="35" r="1.5" fill="#f0c030" opacity=".4" />
-          <circle cx="55" cy="32" r="2" fill="#f8e060" opacity=".5" />
-        </svg>
-        <div class="char-label">Magic Wand</div>
-      </div>
+        // ── AMBIENT CLOUDS ──
+        const sky = document.getElementById('sky');
+        for(let i=0; i<35; i++) {
+            const c = document.createElement('div');
+            c.className = 'cloud';
+            const s = Math.random() * 200 + 100;
+            c.style.width = c.style.height = s + 'px';
+            c.style.left = Math.random() * 100 + '%';
+            c.style.top = Math.random() * 100 + '%';
+            sky.appendChild(c);
+            gsap.to(c, { x: "+=30", y: "+=30", duration: 5 + Math.random()*5, repeat: -1, yoyo: true });
+        }
 
-      <!-- Angel (center, larger) -->
-      <div class="char-item reveal" style="transition-delay:.05s;">
-        <svg width="90" height="100" viewBox="0 0 90 100" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="45" cy="95" rx="30" ry="7" fill="rgba(200,150,240,.15)" />
-          <ellipse cx="45" cy="68" rx="24" ry="28" fill="#f0deff" />
-          <ellipse cx="45" cy="68" rx="17" ry="20" fill="#faf0ff" />
-          <path d="M14 52 Q3 38 12 26 Q24 46 45 52 Q66 46 78 26 Q87 38 76 52" fill="#e0c8f8" opacity=".85" />
-          <path d="M12 26 Q8 18 13 12 Q17 20 22 27" fill="#d0b8f0" opacity=".9" />
-          <path d="M78 26 Q82 18 77 12 Q73 20 68 27" fill="#d0b8f0" opacity=".9" />
-          <circle cx="45" cy="33" r="18" fill="#fde8d0" />
-          <circle cx="45" cy="33" r="12" fill="#feeee0" />
-          <ellipse cx="39" cy="32" rx="3" ry="3.5" fill="#4a3080" opacity=".8" />
-          <ellipse cx="51" cy="32" rx="3" ry="3.5" fill="#4a3080" opacity=".8" />
-          <circle cx="40" cy="31" r="1" fill="#fff" />
-          <circle cx="52" cy="31" r="1" fill="#fff" />
-          <path d="M41 38 Q45 42 49 38" stroke="#c090c0" stroke-width="1.2" fill="none" stroke-linecap="round" />
-          <ellipse cx="38" cy="34" rx="2.5" ry="1.2" fill="#f4a0a0" opacity=".5" />
-          <ellipse cx="52" cy="34" rx="2.5" ry="1.2" fill="#f4a0a0" opacity=".5" />
-          <path d="M40 22 Q45 17 50 22" stroke="#e0b060" stroke-width="1.8" fill="none" stroke-linecap="round" />
-          <circle cx="45" cy="18" r="7" fill="none" stroke="#f0c840" stroke-width="1.5" opacity=".9" />
-          <line x1="45" y1="11" x2="45" y2="8" stroke="#f0c840" stroke-width="1.5" />
-          <line x1="38.5" y1="13" x2="36.5" y2="10.5" stroke="#f0c840" stroke-width="1.5" />
-          <line x1="51.5" y1="13" x2="53.5" y2="10.5" stroke="#f0c840" stroke-width="1.5" />
-        </svg>
-        <div class="char-label">Guardian Angel</div>
-      </div>
+        // ── SCROLL TRIGGERED OBJECTS (BALLOONS & BEARS) ──
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const st = window.pageYOffset || document.documentElement.scrollTop;
+            if (Math.abs(st - lastScrollTop) > 300) { // Every 300px
+                spawnFloatingObj();
+                lastScrollTop = st;
+            }
+        });
 
-      <!-- Duck -->
-      <div class="char-item reveal reveal-right" style="transition-delay:.1s;">
-        <svg width="65" height="80" viewBox="0 0 65 80" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="32" cy="75" rx="22" ry="6" fill="rgba(220,200,100,.15)" />
-          <ellipse cx="32" cy="52" rx="25" ry="22" fill="#f8e840" />
-          <ellipse cx="32" cy="52" rx="18" ry="15" fill="#fef280" />
-          <circle cx="32" cy="30" r="18" fill="#f8e840" />
-          <ellipse cx="25" cy="28" rx="4" ry="4.5" fill="#2a2020" />
-          <circle cx="26.5" cy="26.5" r="1.5" fill="#fff" />
-          <path d="M38 28 Q46 26 46 31 Q46 36 38 34 Z" fill="#f0a020" />
-          <path d="M8 38 Q4 30 10 24 Q16 32 20 38" fill="#f8e840" />
-          <path d="M56 38 Q60 30 54 24 Q48 32 44 38" fill="#f8e840" />
-          <ellipse cx="25" cy="46" rx="3.5" ry="2" fill="#f0d060" opacity=".5" />
-          <ellipse cx="39" cy="46" rx="3.5" ry="2" fill="#f0d060" opacity=".5" />
-          <ellipse cx="25" cy="60" rx="8" ry="5" fill="#f0a020" />
-          <ellipse cx="39" cy="60" rx="8" ry="5" fill="#f0a020" />
-        </svg>
-        <div class="char-label">Little Duck</div>
-      </div>
+        function spawnFloatingObj() {
+            const obj = document.createElement('div');
+            obj.className = 'floating-obj';
+            // Randomly pick balloon or bear
+            const symbols = ['🎈', '🧸', '☁️', '🤍', '🍼'];
+            obj.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            // Random horizontal pos
+            obj.style.left = Math.random() * 100 + 'vw';
+            obj.style.bottom = '-100px';
+            document.body.appendChild(obj);
 
-      <!-- Cloud with rainbow -->
-      <div class="char-item reveal reveal-right" style="transition-delay:.2s;">
-        <svg width="70" height="80" viewBox="0 0 70 80" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 50 Q5 50 5 38 Q5 26 18 26 Q20 16 30 16 Q38 10 46 16 Q54 14 58 22 Q66 22 66 32 Q66 42 56 44"
-            stroke="none" fill="#e0f0ff" />
-          <ellipse cx="35" cy="44" rx="28" ry="14" fill="#fff" />
-          <circle cx="22" cy="40" r="12" fill="#fff" />
-          <circle cx="48" cy="40" r="12" fill="#fff" />
-          <circle cx="35" cy="34" r="14" fill="#fff" />
-          <path d="M18 58 Q18 40 35 40 Q52 40 52 58" fill="none" stroke="#f87070" stroke-width="3"
-            stroke-linecap="round" opacity=".8" />
-          <path d="M22 58 Q22 44 35 44 Q48 44 48 58" fill="none" stroke="#f8b040" stroke-width="3"
-            stroke-linecap="round" opacity=".8" />
-          <path d="M26 58 Q26 48 35 48 Q44 48 44 58" fill="none" stroke="#60c860" stroke-width="3"
-            stroke-linecap="round" opacity=".8" />
-          <path d="M30 58 Q30 52 35 52 Q40 52 40 58" fill="none" stroke="#6090f8" stroke-width="3"
-            stroke-linecap="round" opacity=".8" />
-        </svg>
-        <div class="char-label">Rainbow</div>
-      </div>
-    </div>
-  </div>
+            // Animate up and away
+            gsap.to(obj, {
+                y: -(window.innerHeight + 200),
+                x: (Math.random() - 0.5) * 200,
+                rotation: Math.random() * 360,
+                duration: 5 + Math.random() * 5,
+                ease: "power1.out",
+                onComplete: () => obj.remove()
+            });
+        }
 
-  <!-- SECTION 5: Bible Verse -->
-  <div id="s5" class="section">
-    <div class="divider reveal">
-      <div class="div-line"></div>
-      <div class="div-dot">✦</div>
-      <div class="div-line"></div>
-    </div>
-    <div class="verse-card reveal">
-      <div class="verse-deco">"</div>
-      <div class="verse-text">
-        Let the little children come to me,<br>for the kingdom of heaven<br>belongs to such as these.
-        <span class="verse-ref">— Matthew 19:14</span>
-      </div>
-    </div>
-    <div class="divider reveal">
-      <div class="div-line"></div>
-      <div class="div-dot">✦</div>
-      <div class="div-line"></div>
-    </div>
-  </div>
+        // ── OPEN WORLD ──
+        function openInvitation() {
+            document.getElementById('env').classList.add('open');
+            gsap.to("#hero", { 
+                scale: 1.5, opacity: 0, duration: 2, ease: "power4.inOut", delay: 1,
+                onComplete: () => {
+                    document.getElementById('hero').style.display = 'none';
+                    const main = document.getElementById('main-content');
+                    main.style.display = 'block';
+                    gsap.to(main, { opacity: 1, duration: 2 });
+                    init3DEffects();
+                }
+            });
+        }
 
-  <!-- SECTION 6: RSVP -->
-  <div id="s6" class="section">
-    <div class="sec-eyebrow reveal">kindly reply by june 1, 2025</div>
-    <div class="sec-title reveal">will you be joining us?</div>
+        function init3DEffects() {
+            document.querySelectorAll('.section-3d').forEach(s => {
+                const card = s.querySelector('.card-3d');
+                s.onmousemove = (e) => {
+                    const r = card.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    gsap.to(card, { rotationY: x * 10, rotationX: -y * 10, duration: 1 });
+                    gsap.to(s.querySelector('.float-z'), { x: x * 30, y: y * 30, duration: 1 });
+                };
+                s.onmouseleave = () => {
+                    gsap.to(card, { rotationY: 0, rotationX: 0, duration: 1 });
+                    gsap.to(s.querySelector('.float-z'), { x: 0, y: 0, duration: 1 });
+                };
+                
+                // Entrance anim
+                gsap.from(card, { z: -1000, opacity: 0, duration: 2, scrollTrigger: { trigger: s, start: "top 80%" } });
+            });
+        }
 
-    <div class="rsvp-card reveal" id="rsvpCard">
-      <div class="rsvp-heading">RSVP</div>
-      <div class="rsvp-sub">✦ Your presence is our greatest gift ✦</div>
+        function submitRSVP() {
+            const name = document.getElementById('gName').value;
+            if(!name) return alert("Please enter your name 🕊️");
+            gsap.to("#rsvpForm", { opacity: 0, scale: 0.8, duration: 0.8, onComplete: () => {
+                document.getElementById('rsvpForm').style.display = 'none';
+                document.getElementById('success').style.display = 'block';
+                spawnLotsOfObjects();
+            }});
+        }
 
-      <div class="form-grp">
-        <label class="form-lbl">Your Full Name</label>
-        <input type="text" class="form-inp" id="gName" placeholder="e.g. Maria Santos">
-      </div>
-
-      <div class="form-grp">
-        <label class="form-lbl">Will you be joining us?</label>
-        <div class="attend-row">
-          <button class="att-btn yes" id="yBtn" onclick="setAtt('yes')">🕊️ Joyfully Attending</button>
-          <button class="att-btn no" id="nBtn" onclick="setAtt('no')">🙏 Regretfully Declining</button>
-        </div>
-      </div>
-
-      <div class="form-grp" id="gcGroup" style="display:none;">
-        <label class="form-lbl">Number of Guests (including you)</label>
-        <div class="count-row">
-          <button class="cnt-btn" onclick="chgCnt(-1)">−</button>
-          <div class="cnt-disp" id="cntDisp">1</div>
-          <button class="cnt-btn" onclick="chgCnt(1)">+</button>
-        </div>
-      </div>
-
-      <button class="sub-btn" onclick="doSubmit()">✦ Send My RSVP ✦</button>
-    </div>
-
-    <div class="success-wrap" id="successWrap">
-      <div class="success-ico">🕊️</div>
-      <div class="success-title" id="sTitle">See you there!</div>
-      <div class="success-msg" id="sMsg">Thank you for your RSVP!</div>
-    </div>
-
-    <div class="footer">
-      <div style="font-size:1.4rem;margin-bottom:8px;">✦ ✧ ✦</div>
-      For inquiries: <span style="color:#8050b0;">sofia.delacruz@email.com</span><br>
-      <span style="font-size:.8rem;letter-spacing:2px;color:#c0a0d8;">With love, Miguel & Sofia</span>
-    </div>
-  </div>
-
-  <div class="bg-deco" style="bottom:10%; right:5%; width:180px;" data-speed="0.15"><svg viewBox="0 0 200 200">
-      <path d="M40,100 Q40,40 100,40 Q160,40 160,100 Q160,160 100,160 Q40,160 40,100" fill="rgba(212,175,55,0.05)" />
-    </svg></div>
-</div>
-
-<script>
-  let attending = null, gCount = 1;
-
-  (function () {
-    const c = document.getElementById('hstars');
-    for (let i = 0; i < 80; i++) {
-      const s = document.createElement('div');
-      s.className = 'hstar';
-      const sz = Math.random() * 3 + 1;
-      s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random() * 100}%;left:${Math.random() * 100}%;--d:${2 + Math.random() * 5}s;--o:${.3 + Math.random() * .7};animation-delay:${Math.random() * 5}s;`;
-      c.appendChild(s);
-    }
-  })();
-
-  // ── DYNAMIC SCROLL BALLOONS ──
-  let lastScrollTop = 0;
-  let balloonSpawnCounter = 0;
-
-  window.addEventListener('scroll', () => {
-    const st = window.pageYOffset || document.documentElement.scrollTop;
-    if (Math.abs(st - lastScrollTop) > 50) {
-      spawnScrollBalloon();
-      lastScrollTop = st;
-    }
-  });
-
-  function spawnScrollBalloon() {
-    if (document.getElementById('invitation').style.display !== 'block') return;
-
-    const b = document.createElement('div');
-    b.className = 'scroll-balloon';
-    const side = Math.random() > 0.5 ? 'left' : 'right';
-    const pos = Math.random() * 30; // 0-30% from the side
-    const size = 40 + Math.random() * 40;
-    const colors = ['#f08080', '#87ceeb', '#dda0dd', '#98fb98', '#f0e68c', '#ffb6c1'];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-
-    b.style.width = size + 'px';
-    b.style.height = (size * 1.3) + 'px';
-    b.style[side] = pos + '%';
-    b.style.bottom = '-100px';
-    b.style.setProperty('--duration', (6 + Math.random() * 6) + 's');
-    b.style.setProperty('--rot', (Math.random() * 40 - 20) + 'deg');
-
-    b.innerHTML = `
-    <svg viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="30" cy="32" rx="22" ry="28" fill="${color}" />
-      <line x1="30" y1="60" x2="30" y2="85" stroke="${color}" stroke-width="1.5" opacity="0.6" />
-      <path d="M24 60 Q30 68 36 60" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.6" />
-    </svg>
-  `;
-
-    b.onclick = (e) => {
-      popBalloon(b, e.clientX, e.clientY, color);
-    };
-
-    document.body.appendChild(b);
-    setTimeout(() => b.remove(), 12000);
-  }
-
-  function popBalloon(el, x, y, color) {
-    // Visual explosion
-    for (let i = 0; i < 8; i++) {
-      const p = document.createElement('div');
-      p.className = 'pop-effect';
-      p.style.left = x + 'px';
-      p.style.top = y + 'px';
-      p.style.width = '10px';
-      p.style.height = '10px';
-      p.style.borderRadius = '50%';
-      p.style.backgroundColor = color;
-      const angle = (i / 8) * Math.PI * 2;
-      const dist = 40 + Math.random() * 40;
-      p.animate([
-        { transform: 'translate(0,0) scale(1)', opacity: 1 },
-        { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) scale(0)`, opacity: 0 }
-      ], { duration: 600, easing: 'ease-out' });
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 600);
-    }
-
-    el.style.transform = 'scale(1.5)';
-    el.style.opacity = '0';
-    setTimeout(() => el.remove(), 200);
-  }
-
-  function openInvitation() {
-    const flap = document.getElementById('envFlap');
-    const hint = document.getElementById('openHint');
-    flap.classList.add('open');
-    hint.style.opacity = '0';
-    setTimeout(() => {
-      document.getElementById('hero').style.transition = 'all .8s ease';
-      document.getElementById('hero').style.opacity = '0';
-      document.getElementById('hero').style.transform = 'scale(.95)';
-      setTimeout(() => {
-        document.getElementById('hero').style.display = 'none';
-        const inv = document.getElementById('invitation');
-        inv.style.display = 'block';
-        inv.style.opacity = '0';
-        inv.style.transition = 'opacity .8s ease';
-        setTimeout(() => { inv.style.opacity = '1'; initScroll(); }, 50);
-      }, 800);
-    }, 600);
-  }
-
-  function initScroll() {
-    const items = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
-    }, { threshold: .15 });
-    items.forEach(el => obs.observe(el));
-  }
-
-  function setAtt(v) {
-    attending = v;
-    document.getElementById('yBtn').classList.toggle('active', v === 'yes');
-    document.getElementById('nBtn').classList.toggle('active', v === 'no');
-    document.getElementById('gcGroup').style.display = v === 'yes' ? 'block' : 'none';
-  }
-
-  function chgCnt(d) {
-    gCount = Math.max(1, Math.min(20, gCount + d));
-    document.getElementById('cntDisp').textContent = gCount;
-  }
-
-  function doSubmit() {
-    const name = document.getElementById('gName').value.trim();
-    if (!name) { document.getElementById('gName').focus(); document.getElementById('gName').style.borderColor = '#d090b0'; return; }
-    if (!attending) { alert('Please let us know if you will be attending 🕊️'); return; }
-    document.getElementById('rsvpCard').style.display = 'none';
-    const sw = document.getElementById('successWrap');
-    sw.classList.add('show');
-    const first = name.split(' ')[0];
-    if (attending === 'yes') {
-      document.getElementById('sTitle').textContent = 'See you there, ' + first + '!';
-      document.getElementById('sMsg').innerHTML = 'We have noted <strong style="color:#7040a0">' + gCount + ' guest' + (gCount > 1 ? 's' : '') + '</strong> for your party.<br>Baby Lorenzo is so excited to meet you! 🌟';
-      confetti();
-    } else {
-      document.getElementById('sTitle').textContent = 'We\'ll miss you, ' + first + '.';
-      document.getElementById('sMsg').innerHTML = 'Thank you for letting us know.<br>We\'ll keep you in our prayers on this special day. 🕊️';
-    }
-  }
-
-  function confetti() {
-    const cols = ['#d0a0f8', '#a0c8f8', '#f8d0e0', '#f0f0a0', '#c0f0d0', '#f8c0a0', '#f8e0c0'];
-    for (let i = 0; i < 100; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti-p';
-      const sz = Math.random() * 10 + 4;
-      c.style.cssText = `width:${sz}px;height:${sz * .5}px;background:${cols[Math.floor(Math.random() * cols.length)]};left:${Math.random() * 100}vw;top:-30px;animation-duration:${2.5 + Math.random() * 2}s;animation-delay:${Math.random() * .8}s;border-radius:${Math.random() > 0.5 ? '50%' : '3px'};`;
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 5000);
-    }
-  }
-  // ── CURSOR & PARALLAX ──
-  const glow = document.getElementById('cursorGlow');
-  window.addEventListener('mousemove', (e) => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
-  });
-
-  window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    document.querySelectorAll('.bg-deco').forEach(el => {
-      const speed = el.getAttribute('data-speed');
-      el.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-  });
-</script>
+        function spawnLotsOfObjects() {
+            for(let i=0; i<50; i++) setTimeout(spawnFloatingObj, i * 50);
+        }
+    </script>
+</body>
+</html>
