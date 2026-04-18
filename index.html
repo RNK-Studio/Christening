@@ -58,7 +58,6 @@
             font-size:0.8rem; background:rgba(255,255,255,0.6); backdrop-filter:blur(5px);
         }
 
-        /* ── ENVELOPE (CENTERED) ── */
         .envelope-royal {
             width:320px; height:200px; background:#fff;
             border-radius:15px; position:relative; transform-style:preserve-3d; cursor:pointer;
@@ -73,19 +72,22 @@
         .wax-seal { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4; font-size:45px; transition:0.4s; }
         .envelope-royal.open .wax-seal { opacity:0; }
 
-        /* ── DOVE GUIDE ── */
         #dove-guide {
             position: fixed; width:60px; height:60px; z-index:1000; pointer-events:none;
             display:none; transition: top 0.5s, left 0.5s; font-size: 3rem;
         }
 
-        /* ── FLOATING OBJECTS ── */
         .floating-obj {
             position: fixed; pointer-events: none; z-index: 1000; font-size: 3.5rem;
             filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
         }
+        .floating-frame {
+            position: fixed; pointer-events: none; z-index: 1000;
+            padding: 8px; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 5px; transform-style: preserve-3d;
+        }
+        .floating-frame img { width: 80px; height: 80px; object-fit: cover; border-radius: 3px; }
 
-        /* ── CONTENT ── */
         #main-content { display:none; opacity:0; }
         .luxe-section {
             min-height:120vh; display:flex; align-items:center; justify-content:center;
@@ -95,7 +97,7 @@
             background: rgba(255,255,255,0.7);
             backdrop-filter:blur(30px); border:1px solid #fff; border-radius:50px;
             padding:80px 60px; width:100%; max-width:900px; box-shadow:0 50px 100px rgba(0,0,0,0.05);
-            transform-style:preserve-3d; transform: scale(0.8); /* Starting scale for scroll animation */
+            transform-style:preserve-3d; transform: scale(0.8);
             transition: background 1s;
         }
         .content-z { transform:translateZ(60px); }
@@ -104,7 +106,6 @@
             font-family:'Playfair Display',serif; font-size:3.5rem; color:var(--accent); margin-bottom:40px; text-align: center;
         }
 
-        /* ── PHOTO ── */
         .photo-luxe {
             padding:20px; background:#fff; border-radius:5px; box-shadow:0 30px 60px rgba(0,0,0,0.1);
             transform-style:preserve-3d; transition:0.5s; cursor:pointer;
@@ -112,17 +113,26 @@
         .photo-luxe:hover { transform:translateZ(50px) rotateY(10deg); }
         .photo-luxe img { width:100%; border-radius:3px; }
 
+        #mute-btn {
+            position: fixed; left: 40px; bottom: 40px; width: 50px; height: 50px;
+            background: #fff; border: 1px solid var(--gold); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 2000; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            font-size: 1.5rem;
+        }
+
         @media (max-width: 600px) { .luxe-card { padding:50px 20px; } .envelope-royal { width: 280px; height: 170px; } }
     </style>
 </head>
 <body>
-    <!-- Ambience -->
     <div id="cursor-main"></div>
     <div id="cursor-flare"></div>
     <div class="god-rays"></div>
     <div id="dove-guide">🕊️</div>
+    <div id="mute-btn" onclick="toggleMusic()">🎵</div>
 
-    <!-- Hero Section -->
+    <audio id="bgMusic" src="sound/For This Child - Baby Dedication Song - Ken Blount.mp3" loop></audio>
+
     <section id="hero">
         <canvas id="dust-canvas" style="position:fixed; inset:0; z-index:-1;"></canvas>
         <div class="hero-3d-stack">
@@ -144,19 +154,14 @@
         </div>
     </section>
 
-    <!-- Main Experience -->
     <main id="main-content">
-        <!-- Section: Heavenly Intro -->
         <section class="luxe-section" id="intro">
             <div class="luxe-card">
                 <div class="content-z">
                     <div class="big-text">Heavenly <span>Blessing</span></div>
-                    
                     <div class="photo-luxe" style="max-width: 450px; margin: 0 auto 50px;">
-                        <img src="C:\Users\Keanu\.gemini\antigravity\brain\52c4ea61-2d1c-4a8c-ac4c-74e0370d4598\baby_lorenzo_christening_photo_1776525324716.png" alt="Lorenzo">
-                        <div style="text-align:center; margin-top:20px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.4rem;">"Our Little Angel Lorenzo"</div>
+                        <img src="Photos/d5fedad20ba05d25b17e90e125d01527.jpg" alt="Lorenzo">
                     </div>
-
                     <p style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:2rem; line-height:1.6;">
                         "Join us as we celebrate the sacred start of Lorenzo's journey on this beautiful day."
                     </p>
@@ -164,34 +169,34 @@
             </div>
         </section>
 
-        <!-- Section: Coordinates -->
         <section class="luxe-section" id="coordinates">
             <div class="luxe-card">
                 <div class="content-z">
                     <div class="big-text">The <span>Sacrament</span></div>
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:50px; text-align:center;">
-                        <div><div style="font-size:3.5rem; margin-bottom:15px;">📅</div><h4 style="color:var(--gold); letter-spacing:2px;">JUNE 14, 2025</h4><p>10:00 AM Sharp</p></div>
-                        <div><div style="font-size:3.5rem; margin-bottom:15px;">⛪</div><h4 style="color:var(--gold); letter-spacing:2px;">SAN JOSE PARISH</h4><p>Laoag City</p></div>
-                        <div><div style="font-size:3.5rem; margin-bottom:15px;">👗</div><h4 style="color:var(--gold); letter-spacing:2px;">DRESS CODE</h4><p>Nude & Whites</p></div>
+                        <div><div style="font-size:3.5rem; margin-bottom:15px;">📅</div><h4 style="color:var(--gold);">JUNE 14, 2025</h4><p>10:00 AM Sharp</p></div>
+                        <div><div style="font-size:3.5rem; margin-bottom:15px;">⛪</div><h4 style="color:var(--gold);">SAN JOSE PARISH</h4><p>Laoag City</p></div>
+                        <div><div style="font-size:3.5rem; margin-bottom:15px;">👗</div><h4 style="color:var(--gold);">DRESS CODE</h4><p>Nude & Whites</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section Gallery -->
         <section class="luxe-section" id="gallery">
             <div class="luxe-card">
                 <div class="content-z">
                     <div class="big-text">Sweetest <span>Moments</span></div>
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:30px;">
-                        <div class="photo-luxe"><img src="https://images.unsplash.com/photo-1544126592-807daa2b567b?auto=format&fit=crop&w=600"></div>
-                        <div class="photo-luxe" style="transform: rotate(5deg);"><img src="https://images.unsplash.com/photo-1510154221590-ff63e90a136f?auto=format&fit=crop&w=600"></div>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:30px;">
+                        <div class="photo-luxe animated-photo"><img src="Photos/28fff8227c1678ee4fb277fde7374210.jpg"></div>
+                        <div class="photo-luxe animated-photo" style="transform: rotate(5deg);"><img src="Photos/2a7a988787522d7bc6dc0b5517bd6000.jpg"></div>
+                        <div class="photo-luxe animated-photo" style="transform: rotate(-5deg);"><img src="Photos/61d69bebdf002ec742ca3afe891a1020.jpg"></div>
+                        <div class="photo-luxe animated-photo"><img src="Photos/821f89c61e644f66f42ffd819636729b.jpg"></div>
+                        <div class="photo-luxe animated-photo" style="transform: rotate(3deg);"><img src="Photos/c61c69f926209e05199313c563cd8b01.jpg"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section RSVP -->
         <section class="luxe-section" id="rsvp">
             <div class="luxe-card" style="max-width: 600px;">
                 <div class="content-z">
@@ -221,12 +226,10 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // ── SMOOTH SCROLL ──
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // ── CURSOR ──
         const mainC = document.getElementById('cursor-main');
         const flareC = document.getElementById('cursor-flare');
         window.addEventListener('mousemove', e => {
@@ -234,7 +237,6 @@
             gsap.to(flareC, { x:e.clientX, y:e.clientY, duration:0.2 });
         });
 
-        // ── COUNTDOWN ──
         const target = new Date("June 14, 2025 10:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -244,39 +246,67 @@
             document.getElementById('mins').innerText = Math.floor((d % (1000*60*60)) / (1000*60));
         }, 1000);
 
-        // ── FLOATING OBJECTS ON SCROLL ──
+        const userPhotos = [
+            "Photos/28fff8227c1678ee4fb277fde7374210.jpg",
+            "Photos/2a7a988787522d7bc6dc0b5517bd6000.jpg",
+            "Photos/61d69bebdf002ec742ca3afe891a1020.jpg",
+            "Photos/821f89c61e644f66f42ffd819636729b.jpg",
+            "Photos/c61c69f926209e05199313c563cd8b01.jpg",
+            "Photos/d5fedad20ba05d25b17e90e125d01527.jpg"
+        ];
+
         let lastST = 0;
         window.addEventListener('scroll', () => {
             const st = window.pageYOffset;
-            if(Math.abs(st - lastST) > 300) { // Every 300px
+            if(Math.abs(st - lastST) > 300) {
                 spawnFloatingItem();
                 lastST = st;
             }
         });
 
         function spawnFloatingItem() {
+            const isPhoto = Math.random() > 0.5;
             const o = document.createElement('div');
-            o.className = 'floating-obj';
-            // User requested: Balloons, Bears, Baby Bottles
-            const pool = ['🎈', '🧸', '🍼', '☁️', '🤍', '🕊️'];
-            o.innerText = pool[Math.floor(Math.random()*pool.length)];
+            
+            if(isPhoto) {
+                o.className = 'floating-frame';
+                const img = document.createElement('img');
+                img.src = userPhotos[Math.floor(Math.random()*userPhotos.length)];
+                o.appendChild(img);
+            } else {
+                o.className = 'floating-obj';
+                const pool = ['🎈', '🧸', '🍼', '☁️', '🤍','🕊️'];
+                o.innerText = pool[Math.floor(Math.random()*pool.length)];
+            }
+            
             o.style.left = Math.random()*90 + 5 + 'vw';
-            o.style.bottom = '-100px';
+            o.style.bottom = '-150px';
             document.body.appendChild(o);
 
             gsap.to(o, {
-                y: -window.innerHeight - 300,
-                x: (Math.random()-0.5) * 400,
-                rotation: Math.random()*720,
-                duration: 6 + Math.random()*6,
+                y: -window.innerHeight - 400,
+                x: (Math.random()-0.5) * 500,
+                rotation: (Math.random()-0.5) * 180,
+                scale: 0.5 + Math.random(),
+                duration: 7 + Math.random()*7,
                 ease: "power1.out",
                 onComplete: () => o.remove()
             });
         }
 
-        // ── UNVEIL WORLD ──
+        const music = document.getElementById('bgMusic');
+        let isPlaying = false;
+        function toggleMusic() {
+            if(isPlaying) { music.pause(); document.getElementById('mute-btn').innerText = '🔇'; }
+            else { music.play(); document.getElementById('mute-btn').innerText = '🎵'; }
+            isPlaying = !isPlaying;
+        }
+
         function revealWorld() {
             document.querySelector('.envelope-royal').classList.add('open');
+            music.play().then(() => { isPlaying = true; document.getElementById('mute-btn').innerText = '🎵'; })
+            .catch(e => console.log("Autoplay blocked"));
+
             gsap.to("#hero", { scale: 3, opacity:0, duration: 2, ease: "power4.inOut", delay: 1, onComplete: () => {
                 document.getElementById('hero').style.display='none';
                 const main = document.getElementById('main-content');
@@ -286,35 +316,26 @@
             }});
         }
 
-        // ── CARD POP & SHRINK ANIMATION ──
         function initCinematicScroll() {
             document.querySelectorAll('.luxe-section').forEach(s => {
                 const card = s.querySelector('.luxe-card');
-                
-                // POP OUT when entering, SHRINK when leaving center
                 gsap.to(card, {
-                    scale: 1.1,
-                    boxShadow: "0 100px 200px rgba(0,0,0,0.15)",
-                    scrollTrigger: {
-                        trigger: s,
-                        start: "top bottom",
-                        end: "center center",
-                        scrub: 1,
-                        toggleActions: "play reverse play reverse"
-                    }
+                    scale: 1.1, scrollTrigger: { trigger: s, start: "top bottom", end: "center center", scrub: 1 }
                 });
-                
                 gsap.to(card, {
-                    scale: 0.8,
-                    scrollTrigger: {
-                        trigger: s,
-                        start: "center center",
-                        end: "bottom top",
-                        scrub: 1
-                    }
+                    scale: 0.8, scrollTrigger: { trigger: s, start: "center center", end: "bottom top", scrub: 1 }
                 });
 
-                // Mouse 3D Tilt
+                // PHOTO ANIMATION
+                const photos = s.querySelectorAll('.animated-photo');
+                if(photos.length > 0) {
+                    gsap.from(photos, {
+                        opacity: 0, scale: 0.5, rotation: 15, z: -200, stagger: 0.2, duration: 1.2,
+                        ease: "back.out(1.7)",
+                        scrollTrigger: { trigger: s, start: "top 70%", toggleActions: "play none none none" }
+                    });
+                }
+
                 s.onmousemove = e => {
                     const r = card.getBoundingClientRect();
                     const x = (e.clientX - r.left) / r.width - 0.5;
@@ -322,16 +343,12 @@
                     gsap.to(card, { rotationY: x*12, rotationX:-y*12, duration: 1 });
                     gsap.to(s.querySelector('.content-z'), { x:x*35, y:y*35, duration: 1 });
                 };
-                s.onmouseleave = () => {
-                    gsap.to(card, { rotationY:0, rotationX:0, duration: 1.5 });
-                };
+                s.onmouseleave = () => { gsap.to(card, { rotationY:0, rotationX:0, duration: 1.5 }); };
             });
 
-            // Dove guide movement
             const dove = document.getElementById('dove-guide');
             dove.style.display = "block";
             window.addEventListener('scroll', () => {
-                const y = (window.scrollY / document.documentElement.scrollHeight) * window.innerHeight;
                 gsap.to(dove, { top: 150 + Math.sin(window.scrollY * 0.01) * 30, left: 100 + Math.cos(window.scrollY * 0.01) * 40, duration: 2 });
             });
         }
@@ -341,10 +358,9 @@
             if(!name) return alert("Please enter your name 🕊️");
             document.getElementById('rsvpForm').style.display = 'none';
             document.getElementById('rsvp-success').style.display = 'block';
-            for(let i=0; i<40; i++) setTimeout(spawnFloatingItem, i*50);
+            for(let i=0; i<50; i++) setTimeout(spawnFloatingItem, i*50);
         }
 
-        // Ambient Dust
         const canvas = document.getElementById('dust-canvas');
         const ctx = canvas.getContext('2d');
         let dust = [];
