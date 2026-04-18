@@ -25,9 +25,11 @@
             line-height: 1.6;
         }
 
+        /* ── LUXURY CURSOR ── */
         #cursor-main { position:fixed; width:20px; height:20px; background:radial-gradient(circle at 30% 30%, #fff, var(--gold)); border-radius:50%; pointer-events:none; z-index:10000; box-shadow:0 0 20px rgba(197, 160, 89, 0.4); }
         #cursor-flare { position:fixed; width:150px; height:150px; background:radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
 
+        /* ── GOD RAYS ── */
         .god-rays {
             position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
             background: repeating-conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255,255,255,0.05) 25deg 30deg);
@@ -35,6 +37,7 @@
         }
         @keyframes rays-rotate { 100% { transform: rotate(360deg); } }
 
+        /* ── HERO ── */
         #hero {
             height: 100vh; width: 100%; display:flex; flex-direction: column; align-items:center; justify-content:center;
             perspective:2000px; overflow:hidden; position: relative;
@@ -42,8 +45,9 @@
         .hero-3d-stack { transform-style:preserve-3d; text-align:center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
         .royal-title { font-family:'Playfair Display',serif; font-size:clamp(3.5rem, 12vw, 8rem); color:var(--accent); line-height:1; }
         
-        .countdown-sphere { margin: 30px 0; display:inline-flex; gap:20px; transform:translateZ(50px); }
-        .count-unit { width:70px; height:70px; border-radius:50%; border:1px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; background:rgba(255,255,255,0.6); backdrop-filter:blur(5px); }
+        .countdown-sphere { margin: 30px 0; display:inline-flex; gap:15px; transform:translateZ(50px); }
+        .count-unit { width:65px; height:65px; border-radius:50%; border:1px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.7rem; background:rgba(255,255,255,0.6); backdrop-filter:blur(5px); transition: 0.3s; }
+        .count-unit:hover { transform: scale(1.1); box-shadow: 0 0 15px var(--gold-light); }
 
         .envelope-royal { width:320px; height:200px; background:#fff; border-radius:15px; position:relative; transform-style:preserve-3d; cursor:pointer; box-shadow:0 40px 80px rgba(0,0,0,0.1); transition:transform 0.5s; margin: 0 auto; }
         .envelope-royal:hover { transform: rotateX(15deg) scale(1.05); }
@@ -67,9 +71,9 @@
 
         .big-text { font-family:'Playfair Display',serif; font-size:3.5rem; color:var(--accent); margin-bottom:40px; text-align: center; }
 
-        .photo-luxe { padding:20px; background:#fff; border-radius:5px; box-shadow:0 30px 60px rgba(0,0,0,0.1); transform-style:preserve-3d; transition:0.5s; cursor:pointer; }
+        .photo-luxe { padding:20px; background:#fff; border-radius:5px; box-shadow:0 30px 60px rgba(0,0,0,0.1); transform-style:preserve-3d; transition:0.5s; cursor:pointer; opacity: 1; visibility: visible; }
         .photo-luxe:hover { transform:translateZ(50px) rotateY(10deg); }
-        .photo-luxe img { width:100%; border-radius:3px; }
+        .photo-luxe img { width:100%; border-radius:3px; display: block; }
 
         #mute-btn { position: fixed; left: 40px; bottom: 40px; width: 50px; height: 50px; background: #fff; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2000; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-size: 1.5rem; }
 
@@ -77,13 +81,15 @@
     </style>
 </head>
 <body>
+    <!-- Ambience -->
     <div id="cursor-main"></div>
     <div id="cursor-flare"></div>
     <div class="god-rays"></div>
     <div id="dove-guide">🕊️</div>
     <div id="mute-btn" onclick="toggleMusic()">🎵</div>
 
-    <audio id="bgMusic" src="sound/For This Child - Baby Dedication Song - Ken Blount.mp3" loop></audio>
+    <!-- Music (Clean Path) -->
+    <audio id="bgMusic" src="sound/music.mp3" loop></audio>
 
     <section id="hero">
         <canvas id="dust-canvas" style="position:fixed; inset:0; z-index:-1;"></canvas>
@@ -107,12 +113,14 @@
     </section>
 
     <main id="main-content">
+        <!-- Section: Intro -->
         <section class="luxe-section" id="intro">
             <div class="luxe-card">
                 <div class="content-z">
                     <div class="big-text">Heavenly <span>Blessing</span></div>
                     <div class="photo-luxe" style="max-width: 450px; margin: 0 auto 50px;">
-                        <img src="Photos/d5fedad20ba05d25b17e90e125d01527.jpg" alt="Lorenzo">
+                        <!-- RELATIVE PATH FOR GITHUB -->
+                        <img src="Photos/baby.png" alt="Lorenzo">
                     </div>
                     <p style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:2rem; line-height:1.6;">
                         "Join us as we celebrate the sacred start of Lorenzo's journey on this beautiful day."
@@ -121,6 +129,7 @@
             </div>
         </section>
 
+        <!-- Section: Details -->
         <section class="luxe-section" id="coordinates">
             <div class="luxe-card">
                 <div class="content-z">
@@ -134,11 +143,12 @@
             </div>
         </section>
 
+        <!-- Section: Gallery -->
         <section class="luxe-section" id="gallery">
             <div class="luxe-card">
                 <div class="content-z">
                     <div class="big-text">Sweetest <span>Moments</span></div>
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:30px; min-height: 400px;">
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:30px; min-height: 400px;" id="photo-grid">
                         <div class="photo-luxe animated-photo"><img src="Photos/28fff8227c1678ee4fb277fde7374210.jpg"></div>
                         <div class="photo-luxe animated-photo" style="transform: rotate(5deg);"><img src="Photos/2a7a988787522d7bc6dc0b5517bd6000.jpg"></div>
                         <div class="photo-luxe animated-photo" style="transform: rotate(-5deg);"><img src="Photos/61d69bebdf002ec742ca3afe891a1020.jpg"></div>
@@ -149,6 +159,7 @@
             </div>
         </section>
 
+        <!-- Section: RSVP -->
         <section class="luxe-section" id="rsvp">
             <div class="luxe-card" style="max-width: 600px;">
                 <div class="content-z">
@@ -209,7 +220,7 @@
 
         let lastST = 0;
         window.addEventListener('scroll', () => {
-            const st = window.pageYOffset;
+            const st = window.scrollY;
             if(Math.abs(st - lastST) > 300) {
                 spawnFloatingItem();
                 lastST = st;
@@ -249,7 +260,7 @@
 
         function revealWorld() {
             document.querySelector('.envelope-royal').classList.add('open');
-            music.play().then(() => { isPlaying = true; document.getElementById('mute-btn').innerText = '🎵'; }).catch(e => {});
+            music.play().then(() => { isPlaying = true; document.getElementById('mute-btn').innerText = '🎵'; }).catch(e => { console.log("Audio play blocked by browser. User gesture required."); });
             gsap.to("#hero", { scale: 3, opacity:0, duration: 2, ease: "power4.inOut", delay: 1, onComplete: () => {
                 document.getElementById('hero').style.display='none';
                 const main = document.getElementById('main-content');
@@ -263,27 +274,23 @@
             document.querySelectorAll('.luxe-section').forEach(s => {
                 const card = s.querySelector('.luxe-card');
                 
-                // Card Scale-Up (Center)
                 gsap.fromTo(card, { scale: 0.8 }, {
                     scale: 1.1,
-                    scrollTrigger: { trigger: s, start: "top bottom", end: "center center", scrub: 1 }
+                    scrollTrigger: { trigger: s, start: "top bottom", end: "center center", scrub: true }
                 });
                 
-                // Card Scale-Down (Leaving)
                 gsap.to(card, {
                     scale: 0.8,
-                    scrollTrigger: { trigger: s, start: "center center", end: "bottom top", scrub: 1 }
+                    scrollTrigger: { trigger: s, start: "center center", end: "bottom top", scrub: true }
                 });
 
-                // PHOTO REVEAL FIX
+                // PHOTO REVEAL (Simplified for reliability)
                 const photos = s.querySelectorAll('.animated-photo');
                 if(photos.length > 0) {
                     gsap.from(photos, {
-                        opacity: 0, y: 50, scale: 0.8, stagger: 0.1, duration: 1,
+                        opacity: 0, y: 30, scale: 0.9, stagger: 0.1, duration: 0.8,
                         scrollTrigger: {
-                            trigger: s,
-                            start: "top 60%", // Earlier trigger
-                            toggleActions: "play none none reverse"
+                            trigger: s, start: "top 75%", toggleActions: "play none none none"
                         }
                     });
                 }
