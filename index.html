@@ -25,11 +25,9 @@
             line-height: 1.6;
         }
 
-        /* ── LUXURY CURSOR ── */
         #cursor-main { position:fixed; width:20px; height:20px; background:radial-gradient(circle at 30% 30%, #fff, var(--gold)); border-radius:50%; pointer-events:none; z-index:10000; box-shadow:0 0 20px rgba(197, 160, 89, 0.4); }
         #cursor-flare { position:fixed; width:150px; height:150px; background:radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
 
-        /* ── GOD RAYS ── */
         .god-rays {
             position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
             background: repeating-conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255,255,255,0.05) 25deg 30deg);
@@ -37,7 +35,6 @@
         }
         @keyframes rays-rotate { 100% { transform: rotate(360deg); } }
 
-        /* ── HERO ── */
         #hero {
             height: 100vh; width: 100%; display:flex; flex-direction: column; align-items:center; justify-content:center;
             perspective:2000px; overflow:hidden; position: relative;
@@ -46,8 +43,7 @@
         .royal-title { font-family:'Playfair Display',serif; font-size:clamp(3.5rem, 12vw, 8rem); color:var(--accent); line-height:1; }
         
         .countdown-sphere { margin: 30px 0; display:inline-flex; gap:15px; transform:translateZ(50px); }
-        .count-unit { width:65px; height:65px; border-radius:50%; border:1px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.7rem; background:rgba(255,255,255,0.6); backdrop-filter:blur(5px); transition: 0.3s; }
-        .count-unit:hover { transform: scale(1.1); box-shadow: 0 0 15px var(--gold-light); }
+        .count-unit { width:65px; height:65px; border-radius:50%; border:1px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.7rem; background:rgba(255,255,255,0.6); backdrop-filter:blur(5px); }
 
         .envelope-royal { width:320px; height:200px; background:#fff; border-radius:15px; position:relative; transform-style:preserve-3d; cursor:pointer; box-shadow:0 40px 80px rgba(0,0,0,0.1); transition:transform 0.5s; margin: 0 auto; }
         .envelope-royal:hover { transform: rotateX(15deg) scale(1.05); }
@@ -60,8 +56,8 @@
 
         #dove-guide { position: fixed; width:60px; height:60px; z-index:1000; pointer-events:none; display:none; transition: top 0.5s, left 0.5s; font-size: 3rem; }
 
-        .floating-obj { position: fixed; pointer-events: none; z-index: 1000; font-size: 3.5rem; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15)); }
-        .floating-frame { position: fixed; pointer-events: none; z-index: 1000; padding: 8px; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border-radius: 5px; transform-style: preserve-3d; }
+        .floating-obj { position: fixed; pointer-events: none; z-index: 10000; font-size: 3.5rem; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15)); }
+        .floating-frame { position: fixed; pointer-events: none; z-index: 10000; padding: 8px; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border-radius: 5px; transform-style: preserve-3d; }
         .floating-frame img { width: 80px; height: 80px; object-fit: cover; border-radius: 3px; }
 
         #main-content { display:none; opacity:0; }
@@ -71,9 +67,10 @@
 
         .big-text { font-family:'Playfair Display',serif; font-size:3.5rem; color:var(--accent); margin-bottom:40px; text-align: center; }
 
-        .photo-luxe { padding:20px; background:#fff; border-radius:5px; box-shadow:0 30px 60px rgba(0,0,0,0.1); transform-style:preserve-3d; transition:0.5s; cursor:pointer; opacity: 1; visibility: visible; }
-        .photo-luxe:hover { transform:translateZ(50px) rotateY(10deg); }
+        .photo-luxe { padding:20px; background:#fff; border-radius:5px; box-shadow:0 30px 60px rgba(0,0,0,0.1); transform-style:preserve-3d; transition:0.5s; cursor:pointer; }
         .photo-luxe img { width:100%; border-radius:3px; display: block; }
+        
+        .animated-photo { opacity: 0; transform: translateY(30px) scale(0.9); }
 
         #mute-btn { position: fixed; left: 40px; bottom: 40px; width: 50px; height: 50px; background: #fff; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2000; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-size: 1.5rem; }
 
@@ -81,14 +78,12 @@
     </style>
 </head>
 <body>
-    <!-- Ambience -->
     <div id="cursor-main"></div>
     <div id="cursor-flare"></div>
     <div class="god-rays"></div>
     <div id="dove-guide">🕊️</div>
     <div id="mute-btn" onclick="toggleMusic()">🎵</div>
 
-    <!-- Music (Clean Path) -->
     <audio id="bgMusic" src="sound/music.mp3" loop></audio>
 
     <section id="hero">
@@ -113,13 +108,11 @@
     </section>
 
     <main id="main-content">
-        <!-- Section: Intro -->
         <section class="luxe-section" id="intro">
             <div class="luxe-card">
                 <div class="content-z">
                     <div class="big-text">Heavenly <span>Blessing</span></div>
                     <div class="photo-luxe" style="max-width: 450px; margin: 0 auto 50px;">
-                        <!-- RELATIVE PATH FOR GITHUB -->
                         <img src="Photos/baby.png" alt="Lorenzo">
                     </div>
                     <p style="text-align:center; font-family:'Cormorant Garamond',serif; font-size:2rem; line-height:1.6;">
@@ -129,7 +122,6 @@
             </div>
         </section>
 
-        <!-- Section: Details -->
         <section class="luxe-section" id="coordinates">
             <div class="luxe-card">
                 <div class="content-z">
@@ -143,34 +135,16 @@
             </div>
         </section>
 
-        <!-- Section: Gallery -->
         <section class="luxe-section" id="gallery">
             <div class="luxe-card">
                 <div class="content-z">
                     <div class="big-text">Sweetest <span>Moments</span></div>
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:30px; min-height: 400px;" id="photo-grid">
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:30px; min-height: 400px;">
                         <div class="photo-luxe animated-photo"><img src="Photos/28fff8227c1678ee4fb277fde7374210.jpg"></div>
                         <div class="photo-luxe animated-photo" style="transform: rotate(5deg);"><img src="Photos/2a7a988787522d7bc6dc0b5517bd6000.jpg"></div>
                         <div class="photo-luxe animated-photo" style="transform: rotate(-5deg);"><img src="Photos/61d69bebdf002ec742ca3afe891a1020.jpg"></div>
                         <div class="photo-luxe animated-photo"><img src="Photos/821f89c61e644f66f42ffd819636729b.jpg"></div>
                         <div class="photo-luxe animated-photo" style="transform: rotate(3deg);"><img src="Photos/c61c69f926209e05199313c563cd8b01.jpg"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section: RSVP -->
-        <section class="luxe-section" id="rsvp">
-            <div class="luxe-card" style="max-width: 600px;">
-                <div class="content-z">
-                    <div class="big-text">Kindly <span>Confirm</span></div>
-                    <div id="rsvpForm">
-                        <input type="text" id="guestName" class="photo-luxe" style="width:100%; border:none; margin-bottom:20px; text-align:center;" placeholder="YOUR FULL NAME">
-                        <button onclick="handleRSVP()" class="photo-luxe" style="width:100%; background:var(--gold); color:#fff; font-weight:700; border:none; letter-spacing:4px;">✦ SUBMIT RSVP ✦</button>
-                    </div>
-                    <div id="rsvp-success" style="display:none; text-align:center;">
-                        <div style="font-size:4rem;">🕊️</div>
-                        <h2 style="font-family:'Playfair Display',serif;">Blessings Sent!</h2>
                     </div>
                 </div>
             </div>
@@ -260,7 +234,7 @@
 
         function revealWorld() {
             document.querySelector('.envelope-royal').classList.add('open');
-            music.play().then(() => { isPlaying = true; document.getElementById('mute-btn').innerText = '🎵'; }).catch(e => { console.log("Audio play blocked by browser. User gesture required."); });
+            music.play().then(() => { isPlaying = true; document.getElementById('mute-btn').innerText = '🎵'; }).catch(e => { console.log("Audio play blocked"); });
             gsap.to("#hero", { scale: 3, opacity:0, duration: 2, ease: "power4.inOut", delay: 1, onComplete: () => {
                 document.getElementById('hero').style.display='none';
                 const main = document.getElementById('main-content');
@@ -274,23 +248,27 @@
             document.querySelectorAll('.luxe-section').forEach(s => {
                 const card = s.querySelector('.luxe-card');
                 
+                // Card Scale-Up (Center)
                 gsap.fromTo(card, { scale: 0.8 }, {
                     scale: 1.1,
-                    scrollTrigger: { trigger: s, start: "top bottom", end: "center center", scrub: true }
+                    scrollTrigger: { trigger: s, start: "top bottom", end: "center center", scrub: 1 }
                 });
                 
+                // Card Scale-Down (Leaving)
                 gsap.to(card, {
                     scale: 0.8,
-                    scrollTrigger: { trigger: s, start: "center center", end: "bottom top", scrub: true }
+                    scrollTrigger: { trigger: s, start: "center center", end: "bottom top", scrub: 1 }
                 });
 
-                // PHOTO REVEAL (Simplified for reliability)
+                // PHOTO REVEAL (Bulletproof)
                 const photos = s.querySelectorAll('.animated-photo');
                 if(photos.length > 0) {
-                    gsap.from(photos, {
-                        opacity: 0, y: 30, scale: 0.9, stagger: 0.1, duration: 0.8,
+                    gsap.to(photos, {
+                        opacity: 1, y: 0, scale: 1, stagger: 0.1, duration: 1,
                         scrollTrigger: {
-                            trigger: s, start: "top 75%", toggleActions: "play none none none"
+                            trigger: s,
+                            start: "top 60%", 
+                            toggleActions: "play none none none"
                         }
                     });
                 }
@@ -311,31 +289,6 @@
                 gsap.to(dove, { top: 150 + Math.sin(window.scrollY * 0.01) * 30, left: 100 + Math.cos(window.scrollY * 0.01) * 40, duration: 2 });
             });
         }
-
-        function handleRSVP() {
-            const name = document.getElementById('guestName').value;
-            if(!name) return alert("Please enter your name 🕊️");
-            document.getElementById('rsvpForm').style.display = 'none';
-            document.getElementById('rsvp-success').style.display = 'block';
-            for(let i=0; i<40; i++) setTimeout(spawnFloatingItem, i*50);
-        }
-
-        const canvas = document.getElementById('dust-canvas');
-        const ctx = canvas.getContext('2d');
-        let dust = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        for(let i=0; i<100; i++) dust.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, s:Math.random()*1.5, o:Math.random(), sp:Math.random()*0.2 });
-        function animDust() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            dust.forEach(p => {
-                ctx.fillStyle = `rgba(197,160,89,${p.o})`;
-                ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2); ctx.fill();
-                p.y-=p.sp; if(p.y<0) p.y=canvas.height;
-            });
-            requestAnimationFrame(animDust);
-        }
-        animDust();
     </script>
 </body>
 </html>
