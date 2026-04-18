@@ -37,28 +37,30 @@
         }
         @keyframes rays-rotate { 100% { transform: rotate(360deg); } }
 
-        /* ── HERO EXPERIENCE (ENVELOPE) ── */
+        /* ── HERO EXPERIENCE ── */
         #hero {
             height: 100vh; width: 100%; display:flex; flex-direction: column; align-items:center; justify-content:center;
             perspective:2000px; overflow:hidden; position: fixed; inset: 0; z-index: 5000; background: var(--sky);
+            transition: opacity 1s, visibility 1s;
         }
-        .hero-3d-stack { transform-style:preserve-3d; text-align:center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
-        .royal-title { font-family:'Playfair Display',serif; font-size:clamp(3.5rem, 12vw, 8rem); color:var(--accent); line-height:1; pointer-events: none; }
+        #hero-overlay {
+            position: absolute; inset: 0; z-index: 1000; cursor: pointer;
+        }
+        .hero-3d-stack { transform-style:preserve-3d; text-align:center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; pointer-events: none; }
+        .royal-title { font-family:'Playfair Display',serif; font-size:clamp(3.5rem, 12vw, 8rem); color:var(--accent); line-height:1; }
         
-        .countdown-sphere { margin: 30px 0; display:inline-flex; gap:15px; transform:translateZ(50px); pointer-events: none; }
+        .countdown-sphere { margin: 30px 0; display:inline-flex; gap:15px; transform:translateZ(50px); }
         .count-unit { width:65px; height:65px; border-radius:50%; border:1px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.7rem; background:rgba(255,255,255,0.6); backdrop-filter:blur(5px); }
 
         .envelope-royal { 
             width:320px; height:200px; background:#fff; border-radius:15px; position:relative; transform-style:preserve-3d; 
-            cursor: pointer; box-shadow:0 40px 80px rgba(0,0,0,0.1); transition:transform 0.5s; margin: 0 auto;
-            z-index: 100;
+            box-shadow:0 40px 80px rgba(0,0,0,0.1); margin: 0 auto; transition: 0.5s;
         }
-        .envelope-royal:hover { transform: rotateX(15deg) scale(1.05); }
-        .flap-r { position:absolute; top:0; left:0; width:100%; height:100%; background:#fcf9f5; clip-path:polygon(0 0, 50% 65%, 100% 0); z-index:3; transform-origin:top; transition:1s; pointer-events: none; }
+        .flap-r { position:absolute; top:0; left:0; width:100%; height:100%; background:#fcf9f5; clip-path:polygon(0 0, 50% 65%, 100% 0); z-index:3; transform-origin:top; transition:1s; }
         .envelope-royal.open .flap-r { transform:rotateX(180deg); }
-        .paper-r { position:absolute; inset:12px; background:#fff; z-index:2; border-radius:10px; box-shadow:inset 0 0 15px rgba(0,0,0,0.02); display:flex; align-items:center; justify-content:center; transition:1s; pointer-events: none; }
+        .paper-r { position:absolute; inset:12px; background:#fff; z-index:2; border-radius:10px; box-shadow:inset 0 0 15px rgba(0,0,0,0.02); display:flex; align-items:center; justify-content:center; transition:1s; }
         .envelope-royal.open .paper-r { transform:translateY(-75%) translateZ(40px) scale(1.05); }
-        .wax-seal { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4; font-size:45px; transition:0.4s; pointer-events: none; }
+        .wax-seal { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4; font-size:45px; transition:0.4s; }
         .envelope-royal.open .wax-seal { opacity:0; }
 
         #dove-guide { position: fixed; width:60px; height:60px; z-index:1000; pointer-events:none; display:none; transition: top 0.5s, left 0.5s; font-size: 3rem; }
@@ -67,7 +69,7 @@
         .floating-frame { position: fixed; pointer-events: none; z-index: 10000; padding: 8px; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border-radius: 5px; transform-style: preserve-3d; }
         .floating-frame img { width: 80px; height: 80px; object-fit: cover; border-radius: 3px; }
 
-        #main-content { opacity: 0; visibility: hidden; }
+        #main-content { opacity: 0; visibility: hidden; width: 100%; }
         .luxe-section { min-height:120vh; display:flex; align-items:center; justify-content:center; padding:150px 20px; position:relative; transform-style:preserve-3d; }
         .luxe-card { background: rgba(255,255,255,0.7); backdrop-filter:blur(30px); border:1px solid #fff; border-radius:50px; padding:80px 60px; width:100%; max-width:900px; box-shadow:0 50px 100px rgba(0,0,0,0.05); transform-style:preserve-3d; }
         .content-z { transform:translateZ(60px); }
@@ -85,18 +87,18 @@
     </style>
 </head>
 <body>
-    <!-- Ambience -->
     <div id="cursor-main"></div>
     <div id="cursor-flare"></div>
     <div class="god-rays"></div>
     <div id="dove-guide">🕊️</div>
     <div id="mute-btn" onclick="toggleMusic()">🎵</div>
 
-    <!-- Music -->
     <audio id="bgMusic" src="sound/music.mp3" loop></audio>
 
-    <!-- Hero / Envelope (Fixed Layer) -->
     <section id="hero">
+        <!-- Overlay for instant click detection -->
+        <div id="hero-overlay" onclick="revealWorld()"></div>
+        
         <canvas id="dust-canvas" style="position:absolute; inset:0; z-index:-1;"></canvas>
         <div class="hero-3d-stack">
             <h1 class="royal-title">Baby Lorenzo</h1>
@@ -106,18 +108,17 @@
                 <div class="count-unit"><span id="mins">-</span><small>MINS</small></div>
             </div>
             
-            <div class="envelope-royal" id="envelope-trigger" onclick="revealWorld()">
+            <div class="envelope-royal" id="envelope-royal">
                 <div class="flap-r"></div>
                 <div class="paper-r">
                     <span style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.5rem; color:var(--accent);">Royal Invitation</span>
                 </div>
                 <div class="wax-seal">🕊️</div>
             </div>
-            <div style="margin-top: 50px; font-size: 0.8rem; letter-spacing: 5px; opacity: 0.5;">CLICK ENVELOPE TO ENTER</div>
+            <div id="click-hint" style="margin-top: 50px; font-size: 0.8rem; letter-spacing: 5px; opacity: 0.5;">CLICK ANYWHERE TO ENTER</div>
         </div>
     </section>
 
-    <!-- Main Content (Scrolling Layer) -->
     <main id="main-content">
         <section class="luxe-section" id="intro">
             <div class="luxe-card">
@@ -140,7 +141,7 @@
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:50px; text-align:center;">
                         <div><div style="font-size:3.5rem; margin-bottom:15px;">📅</div><h4 style="color:var(--gold);">JUNE 14, 2025</h4><p>10:00 AM Sharp</p></div>
                         <div><div style="font-size:3.5rem; margin-bottom:15px;">⛪</div><h4 style="color:var(--gold);">SAN JOSE PARISH</h4><p>Laoag City</p></div>
-                        <div><div style="font-size:3.5rem; margin-bottom:15px;">🎀</div><h4 style="color:var(--gold);">NUDE & WHITES</h4><p>Formal</p></div>
+                        <div><div style="font-size:3.5rem; margin-bottom:15px;">👗</div><h4 style="color:var(--gold);">DRESS CODE</h4><p>Nude & Whites</p></div>
                     </div>
                 </div>
             </div>
@@ -199,8 +200,7 @@
             "Photos/2a7a988787522d7bc6dc0b5517bd6000.jpg",
             "Photos/61d69bebdf002ec742ca3afe891a1020.jpg",
             "Photos/821f89c61e644f66f42ffd819636729b.jpg",
-            "Photos/c61c69f926209e05199313c563cd8b01.jpg",
-            "Photos/d5fedad20ba05d25b17e90e125d01527.jpg"
+            "Photos/c61c69f926209e05199313c563cd8b01.jpg"
         ];
 
         let lastST = 0;
@@ -248,21 +248,22 @@
             if(unveiled) return;
             unveiled = true;
             
-            const env = document.getElementById('envelope-trigger');
-            env.classList.add('open');
-            env.style.pointerEvents = "none";
+            // Immediate visual feedback
+            document.getElementById('hero-overlay').style.display = 'none';
+            document.getElementById('envelope-royal').classList.add('open');
+            document.getElementById('click-hint').innerText = "ENTERING...";
 
-            // Audio Start
+            // Audio (Non-blocking)
             music.play().then(() => { isPlaying = true; document.getElementById('mute-btn').innerText = '🎵'; }).catch(() => {});
             
-            // Unveil Animation
+            // Fast Unveil Transition
             gsap.to("#hero", { 
-                scale: 4, opacity: 0, duration: 2.2, ease: "power4.inOut", delay: 0.5,
+                scale: 5, opacity: 0, duration: 1.8, ease: "power4.inOut",
                 onComplete: () => {
-                    document.getElementById('hero').style.display = 'none';
+                    document.getElementById('hero').style.visibility = 'hidden';
                     const main = document.getElementById('main-content');
                     main.style.visibility = 'visible';
-                    gsap.to(main, { opacity: 1, duration: 1.5 });
+                    gsap.to(main, { opacity: 1, duration: 1.2 });
                     initCinematicScroll();
                 }
             });
@@ -273,22 +274,18 @@
                 const card = s.querySelector('.luxe-card');
                 
                 gsap.fromTo(card, { scale: 0.85 }, {
-                    scale: 1.05,
-                    scrollTrigger: { trigger: s, start: "top bottom", end: "center center", scrub: true }
+                    scale: 1.05, scrollTrigger: { trigger: s, start: "top bottom", end: "center center", scrub: true }
                 });
                 
                 gsap.to(card, {
-                    scale: 0.85,
-                    scrollTrigger: { trigger: s, start: "center center", end: "bottom top", scrub: true }
+                    scale: 0.85, scrollTrigger: { trigger: s, start: "center center", end: "bottom top", scrub: true }
                 });
 
                 const photos = s.querySelectorAll('.animated-photo');
                 if(photos.length > 0) {
                     gsap.to(photos, {
                         opacity: 1, y: 0, scale: 1, stagger: 0.1, duration: 1,
-                        scrollTrigger: {
-                            trigger: s, start: "top 85%", toggleActions: "play none none none"
-                        }
+                        scrollTrigger: { trigger: s, start: "top 85%", toggleActions: "play none none none" }
                     });
                 }
 
@@ -313,12 +310,11 @@
         const canvas = document.getElementById('dust-canvas');
         const ctx = canvas.getContext('2d');
         let dust = [];
-        function resize() { 
-            const r = document.getElementById('hero').getBoundingClientRect();
+        function resize() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight; 
         }
         window.addEventListener('resize', resize); resize();
-        for(let i=0; i<80; i++) dust.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, s:Math.random()*1.5, o:Math.random(), sp:Math.random()*0.2 });
+        for(let i=0; i<60; i++) dust.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, s:Math.random()*1.5, o:Math.random(), sp:Math.random()*0.2 });
         function animDust() {
             ctx.clearRect(0,0,canvas.width,canvas.height);
             dust.forEach(p => {
